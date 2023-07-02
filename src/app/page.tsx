@@ -1,6 +1,7 @@
 import Header from '@/components/Header'
 import { Input } from '@/components/Input'
 import { Layout } from '@/components/Layout'
+import { Mail, User } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
                 id="name"
                 type="text"
                 placeholder="Escreva aqui o seu nome"
+                iconLeft={() => (
+                  <User className="text-gray-50 transition-colors  group-hover:text-[#9D37F2]" />
+                )}
               />
             </div>
             <div className="flex w-full flex-col gap-1">
@@ -29,6 +33,9 @@ export default function Home() {
                 id="email"
                 type="text"
                 placeholder="nome@email.com"
+                iconLeft={() => (
+                  <Mail className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
+                )}
               />
             </div>
           </form>
