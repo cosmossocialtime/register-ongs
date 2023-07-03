@@ -1,5 +1,5 @@
 import { InputLabel } from './InputLabel'
-import { InputMain } from './Input'
+import { InputMain } from './InputMain'
 
 export const Input = {
   InputMain,
