@@ -1,14 +1,14 @@
 'use client'
 import Header from '@/components/Header'
-import { Input } from '@/components/Input'
 import { Layout } from '@/components/Layout'
 import { Mail, User } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   TypeFormRegisterOngs,
   schemaFormValidation,
 } from '@/types/Input/typesRegisterForm'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Input } from '@/components/Input'
 
 export default function Home() {
   const {
@@ -29,7 +29,6 @@ export default function Home() {
     console.log(data)
     console.log(errors)
   }
-
   return (
     <main className="h-screen">
       <Header />
@@ -43,32 +42,40 @@ export default function Home() {
             className="flex flex-col justify-center gap-5"
           >
             <div className="flex w-full flex-col gap-1">
-              <Input.Label
-                name="Nome da liderança da organização"
-                reference="name"
-              />
-              <Input.InputMain
+              <Input
                 {...register('name')}
-                id="name"
-                type="text"
-                placeholder="Escreva aqui o seu nome"
+                placeholder="Escreva aqui seu nome"
                 iconLeft={() => (
                   <User className="text-gray-50 transition-colors  group-hover:text-[#9D37F2]" />
                 )}
               />
-              {errors.name && <span>{errors.name.message}</span>}
             </div>
+            {errors.name?.message && (
+              <span className="text-sm text-red-600">
+                {errors.name.message}
+              </span>
+            )}
             <div className="flex w-full flex-col gap-1">
-              <Input.Label name="E-mail" reference="email" />
-              <Input.InputMain
+              <Input
                 {...register('email')}
-                id="email"
-                placeholder="nome@email.com"
+                placeholder="Email@email.com"
                 iconLeft={() => (
                   <Mail className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
                 )}
               />
-              {errors.email && <span>{errors.email.message}</span>}
+            </div>
+            {errors.email?.message && (
+              <span className="text-sm text-red-600">
+                {errors.email.message}
+              </span>
+            )}
+
+            <div className="custom-date-input flex w-full flex-col gap-1">
+              <Input
+                {...register('birth')}
+                type="date"
+                placeholder="Selecione sua data de nascimento"
+              />
             </div>
             <button>Enviar</button>
           </form>
