@@ -1,19 +1,23 @@
 'use client'
 import Header from '@/components/Header'
 import { Layout } from '@/components/Layout'
-import { Mail, User } from 'lucide-react'
+import { Mail, Smartphone, User } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Input } from '@/components/Input'
+import { phoneMask } from '@/mask/MaskForNumberTel'
 import {
   TypeFormRegisterOngs,
   schemaFormValidation,
 } from '@/types/Input/typesRegisterForm'
-import { Input } from '@/components/Input'
+import { useEffect } from 'react'
 
 export default function Home() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<TypeFormRegisterOngs>({
     resolver: zodResolver(schemaFormValidation),
@@ -25,10 +29,17 @@ export default function Home() {
     },
   })
 
+  const numberTel = watch('tel')
+
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
     console.log(errors)
   }
+
+  useEffect(() => {
+    setValue('tel', phoneMask(numberTel))
+  }, [numberTel, setValue])
+
   return (
     <main className="h-screen">
       <Header />
@@ -74,9 +85,33 @@ export default function Home() {
               <Input
                 {...register('birth')}
                 type="date"
+                htmlRef="birth"
+                id="birth"
                 placeholder="Selecione sua data de nascimento"
               />
             </div>
+            {errors.birth && (
+              <span className="text-sm text-red-600">
+                {errors.birth.message}
+              </span>
+            )}
+
+            <div className="custom-date-input flex w-full flex-col gap-1">
+              <Input
+                {...register('tel')}
+                label="Seu numero de telefone"
+                htmlRef="tel"
+                id="tel"
+                maxLength={15}
+                placeholder="Informe seu numero de telefone"
+                iconLeft={() => (
+                  <Smartphone className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
+                )}
+              />
+            </div>
+            {errors.tel && (
+              <span className="text-sm text-red-600">{errors.tel.message}</span>
+            )}
             <button>Enviar</button>
           </form>
         </div>
