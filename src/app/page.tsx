@@ -1,7 +1,7 @@
 'use client'
 import Header from '@/components/Header'
 import { Layout } from '@/components/Layout'
-import { Check, ChevronDown, Mail, Smartphone, User } from 'lucide-react'
+import { Mail, Smartphone, User } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/Input'
@@ -11,7 +11,6 @@ import {
   TypeFormRegisterOngs,
   schemaFormValidation,
 } from '@/types/Input/typesRegisterForm'
-import * as Select from '@radix-ui/react-select'
 
 export default function Home() {
   const {
@@ -27,7 +26,6 @@ export default function Home() {
   })
 
   const numberTel = watch('tel')
-  const gender = watch('gender')
 
   useEffect(() => {
     setValue('tel', phoneMask(numberTel))
@@ -110,62 +108,26 @@ export default function Home() {
             {errors.tel && (
               <span className="text-sm text-red-600">{errors.tel.message}</span>
             )}
-            <div className="custom-date-input flex w-full flex-col gap-1">
-              <Select.Root value={gender}>
-                <Select.Trigger className="group flex w-full items-center gap-2 rounded border border-gray-50 px-4 py-3 pl-2 text-gray-400 transition-colors hover:border-[#9D37F2] hover:shadow-sm hover:shadow-[#9D37F2] focus:outline-none focus:ring-1">
-                  <Select.Icon>
-                    <ChevronDown
-                      size={20}
-                      className="text-gray-50 transition-colors group-hover:text-[#9D37F2]"
-                    />
-                  </Select.Icon>
-                  <Select.Value
-                    placeholder="Selecione seu gênero"
-                    className="text-zinc-50"
-                  />
-                </Select.Trigger>
-                <Select.Portal>
-                  <Select.Content
-                    position="popper"
-                    className="mt-1 w-44 rounded border border-gray-50 bg-zinc-50 text-center"
+            <div className="flex flex-col gap-1 text-gray-600">
+              <label htmlFor="gender">Selecione seu gênero</label>
+              <div className="flex w-full items-center gap-1 rounded-md border border-gray-50 transition-colors hover:border-[#9D37F2] hover:shadow-sm hover:shadow-[#9D37F2] focus:border-[#65BAFA] focus:outline-none focus:ring-1 focus:ring-[#65BAFA]">
+                <select
+                  className="mr-2 w-full cursor-pointer rounded-lg border-none bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
+                  {...register('gender')}
+                >
+                  <option
+                    value={''}
+                    disabled
+                    selected
+                    className="hover:bg-gray-600"
                   >
-                    <Select.Viewport className="flex cursor-pointer flex-col gap-1 py-2 text-zinc-600">
-                      <Select.Item
-                        key="Masculino"
-                        value="Masculino"
-                        className="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-[#9D37F2] hover:text-zinc-50"
-                      >
-                        <Select.ItemText className="">
-                          Masculino
-                        </Select.ItemText>
-                        <Select.ItemIndicator className="">
-                          <Check size={15} />
-                        </Select.ItemIndicator>
-                      </Select.Item>
-                      <Select.Item
-                        key="Feminino"
-                        value="Feminino"
-                        className="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-violet-500 hover:text-white"
-                      >
-                        <Select.ItemText className="">Feminino</Select.ItemText>
-                        <Select.ItemIndicator className="">
-                          <Check size={15} />
-                        </Select.ItemIndicator>
-                      </Select.Item>
-                      <Select.Item
-                        key="Outro"
-                        value="Outro"
-                        className="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-violet-500 hover:text-white"
-                      >
-                        <Select.ItemText className="">Outro</Select.ItemText>
-                        <Select.ItemIndicator className="">
-                          <Check size={15} />
-                        </Select.ItemIndicator>
-                      </Select.Item>
-                    </Select.Viewport>
-                  </Select.Content>
-                </Select.Portal>
-              </Select.Root>
+                    Selecione seu gênero
+                  </option>
+                  <option>Masculino</option>
+                  <option>Feminino</option>
+                  <option>Outro</option>
+                </select>
+              </div>
             </div>
             {errors.gender && (
               <span className="text-sm text-red-600">

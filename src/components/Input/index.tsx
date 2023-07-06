@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="flex flex-col gap-2">
         <label
           htmlFor={htmlRef}
-          className="flex w-full flex-col bg-transparent text-gray-800"
+          className="flex w-full flex-col bg-transparent text-gray-600"
         >
           {label}
         </label>
@@ -26,7 +26,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <input
               {...rest}
               ref={ref}
-              className="w-full bg-transparent px-2 py-3 text-gray-600 focus:border-none focus:outline-none "
+              className="w-full bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
             />
 
             {iconRight && iconRight()}

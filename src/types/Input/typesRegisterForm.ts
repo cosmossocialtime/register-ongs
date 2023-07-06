@@ -6,8 +6,8 @@ export const schemaFormValidation = z.object({
   birth: z.coerce.date(),
   tel: z
     .string()
-    .min(15, 'Informe um numero de telefone valido')
-    .max(15, 'Informe um numero de telefone valido')
+    .min(15, 'Informe um numero de telefone válido')
+    .max(15, 'Informe um numero de telefone válido')
     .nonempty('Informe um numero de telefone'),
   gender: z.string().nonempty('Por favor selecione seu gênero'),
 })
