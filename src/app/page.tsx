@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import {
   TypeFormRegisterOngs,
   schemaFormValidation,
-} from '@/types/Input/typesRegisterForm'
+} from '@/types/typesRegisterForm'
 
 const genders = ['Masculino', 'Feminino', 'Outro']
 
