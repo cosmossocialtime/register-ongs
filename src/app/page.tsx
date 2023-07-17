@@ -2,9 +2,10 @@
 import Header from '@/components/Header'
 import { Layout } from '@/components/Layout'
 import { Mail, Smartphone, User } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/Input'
+import { InputSelect } from '@/components/Select'
 import { phoneMask } from '@/mask/MaskForNumberTel'
 import { useEffect } from 'react'
 import {
@@ -12,12 +13,15 @@ import {
   schemaFormValidation,
 } from '@/types/Input/typesRegisterForm'
 
+const genders = ['Masculino', 'Feminino', 'Outro']
+
 export default function Home() {
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<TypeFormRegisterOngs>({
     resolver: zodResolver(schemaFormValidation),
@@ -34,6 +38,7 @@ export default function Home() {
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
   }
+
   console.log(errors)
 
   return (
@@ -111,22 +116,21 @@ export default function Home() {
             <div className="flex flex-col gap-1 text-gray-600">
               <label htmlFor="gender">Selecione seu gênero</label>
               <div className="flex w-full items-center gap-1 rounded-md border border-gray-50 transition-colors hover:border-[#9D37F2] hover:shadow-sm hover:shadow-[#9D37F2] focus:border-[#65BAFA] focus:outline-none focus:ring-1 focus:ring-[#65BAFA]">
-                <select
-                  className="mr-2 w-full cursor-pointer rounded-lg border-none bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
-                  {...register('gender')}
-                >
-                  <option
-                    value={''}
-                    disabled
-                    selected
-                    className="hover:bg-gray-600"
-                  >
-                    Selecione seu gênero
-                  </option>
-                  <option>Masculino</option>
-                  <option>Feminino</option>
-                  <option>Outro</option>
-                </select>
+                <Controller
+                  name="gender"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputSelect
+                      className="mr-2 w-full cursor-pointer rounded-lg border-none bg-transparent px-2 py-3 text-gray-600 focus:border-none focus:outline-none"
+                      placeholder="Selecione seu 
+                      gênero"
+                      items={genders}
+                      option={field.value}
+                      changeOption={(option) => field.onChange(option)}
+                    />
+                  )}
+                />
               </div>
             </div>
             {errors.gender && (
