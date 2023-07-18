@@ -34,8 +34,6 @@ export default function Home() {
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
   }
-  console.log(errors)
-
   return (
     <main className="h-screen">
       <Header />
@@ -112,11 +110,12 @@ export default function Home() {
               <label htmlFor="gender">Selecione seu gênero</label>
               <div className="flex w-full items-center gap-1 rounded-md border border-gray-50 transition-colors hover:border-[#9D37F2] hover:shadow-sm hover:shadow-[#9D37F2] focus:border-[#65BAFA] focus:outline-none focus:ring-1 focus:ring-[#65BAFA]">
                 <select
+                  defaultValue=""
                   className="mr-2 w-full cursor-pointer rounded-lg border-none bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
                   {...register('gender')}
                 >
                   <option
-                    value={''}
+                    value=""
                     disabled
                     selected
                     className="hover:bg-gray-600"
