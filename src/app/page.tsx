@@ -1,7 +1,7 @@
 'use client'
 import Header from '@/components/Header'
 import { Layout } from '@/components/Layout'
-import { Mail, Smartphone, User, Building2 } from 'lucide-react'
+import { Mail, Smartphone, User, Building2, Building } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/Input'
@@ -39,8 +39,6 @@ export default function Home() {
     console.log(data)
   }
 
-  console.log(errors)
-
   return (
     <main className="h-screen">
       <Header />
@@ -54,6 +52,7 @@ export default function Home() {
               <Input
                 {...register('name')}
                 htmlRef="name"
+                maxLength={50}
                 id="name"
                 label="Nome da liderança da organização"
                 placeholder="Escreva aqui seu nome"
@@ -141,7 +140,7 @@ export default function Home() {
                 label="Cargo em que atua"
                 htmlRef="role"
                 id="role"
-                maxLength={15}
+                maxLength={30}
                 placeholder="Escreva o cargo em que você atua na organização"
                 iconLeft={() => (
                   <Building2 className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
@@ -153,12 +152,30 @@ export default function Home() {
                 </span>
               )}
             </div>
-            <div>
+            <div className="mt-5 flex flex-col justify-center gap-5">
               <h1 className="my-5 text-2xl font-semibold text-gray-800">
                 Etapa 2: Sobre a Organização
               </h1>
+              <Input
+                {...register('nameCompany')}
+                htmlRef="nameCompany"
+                maxLength={50}
+                id="nameCompany"
+                label="Nome da organização"
+                placeholder="Escreva aqui o nome da organização"
+                iconLeft={() => (
+                  <Building className="text-gray-50 transition-colors  group-hover:text-[#9D37F2]" />
+                )}
+              />
+              {errors.nameCompany?.message && (
+                <span className="text-sm text-red-600">
+                  {errors.nameCompany.message}
+                </span>
+              )}
             </div>
-            <button>Enviar</button>
+            <button className="my-10 w-full rounded-md bg-violet-500 py-3 font-semibold text-zinc-50 transition-colors hover:bg-violet-400">
+              Enviar
+            </button>
           </form>
         </div>
       </Layout>
