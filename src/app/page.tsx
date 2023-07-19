@@ -8,6 +8,8 @@ import {
   Building2,
   Building,
   ChevronRight,
+  X,
+  Briefcase,
 } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -51,9 +53,12 @@ export default function Home() {
 
   function handleSubmitCauses() {
     if (causes) {
-      setCausesArray([...causesArray, causes])
+      if (causesArray.length <= 2) {
+        setCausesArray([...causesArray, causes])
+      }
     }
   }
+
   console.log(causesArray)
 
   return (
@@ -195,8 +200,11 @@ export default function Home() {
                   htmlRef="causes"
                   maxLength={50}
                   id="causes"
-                  label="Nome da organização"
-                  placeholder="Escreva aqui o nome da organização"
+                  label="Causa(s) em que atua (máx. 3)"
+                  placeholder="Escreva aqui o nome das causas."
+                  iconLeft={() => (
+                    <Briefcase className="text-gray-50 transition-colors  group-hover:text-[#9D37F2]" />
+                  )}
                 />
                 <div className="flex items-end">
                   <button
@@ -214,15 +222,29 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
                 {causesArray.map((cause, index) => {
                   return (
-                    <span
+                    <div
                       key={index}
-                      className=" rounded-md bg-sky-500 p-2 font-semibold text-zinc-50"
+                      className="flex w-fit gap-2 rounded-full bg-sky-500 px-3 py-2"
                     >
-                      {cause}
-                    </span>
+                      <span className=" font-semibold text-zinc-50">
+                        {cause}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCausesArray((prevArray) => {
+                            const updateArray = [...prevArray]
+                            updateArray.splice(index, 1)
+                            return updateArray
+                          })
+                        }}
+                      >
+                        <X className="text-zinc-50 transition-colors hover:text-violet-600" />
+                      </button>
+                    </div>
                   )
                 })}
               </div>
