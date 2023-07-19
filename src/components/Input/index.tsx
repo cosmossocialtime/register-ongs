@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ iconLeft, iconRight, label, htmlRef, ...rest }: InputProps, ref) => {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
         <label
           htmlFor={htmlRef}
           className="flex w-full flex-col bg-transparent text-gray-600"
@@ -26,7 +26,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <input
               {...rest}
               ref={ref}
-              className="w-full bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
+              className="flex-1 bg-transparent px-2 py-3 text-gray-500 focus:border-none focus:outline-none"
             />
 
             {iconRight && iconRight()}
