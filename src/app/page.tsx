@@ -1,13 +1,20 @@
 'use client'
 import Header from '@/components/Header'
 import { Layout } from '@/components/Layout'
-import { Mail, Smartphone, User, Building2, Building } from 'lucide-react'
+import {
+  Mail,
+  Smartphone,
+  User,
+  Building2,
+  Building,
+  ChevronRight,
+} from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/Input'
 import { InputSelect } from '@/components/Select'
 import { phoneMask } from '@/mask/MaskForNumberTel'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   TypeFormRegisterOngs,
   schemaFormValidation,
@@ -16,6 +23,8 @@ import {
 const genders = ['Masculino', 'Feminino', 'Outro']
 
 export default function Home() {
+  const [causesArray, setCausesArray] = useState(Array<string>)
+
   const {
     register,
     handleSubmit,
@@ -30,6 +39,7 @@ export default function Home() {
   })
 
   const numberTel = watch('tel')
+  const causes = watch('causes')
 
   useEffect(() => {
     setValue('tel', phoneMask(numberTel))
@@ -38,6 +48,13 @@ export default function Home() {
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
   }
+
+  function handleSubmitCauses() {
+    if (causes) {
+      setCausesArray([...causesArray, causes])
+    }
+  }
+  console.log(causesArray)
 
   return (
     <main className="h-screen">
@@ -146,9 +163,9 @@ export default function Home() {
                   <Building2 className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
                 )}
               />
-              {errors.tel && (
+              {errors.role && (
                 <span className="text-sm text-red-600">
-                  {errors.tel.message}
+                  {errors.role.message}
                 </span>
               )}
             </div>
@@ -172,6 +189,43 @@ export default function Home() {
                   {errors.nameCompany.message}
                 </span>
               )}
+              <div className="flex gap-3">
+                <Input
+                  {...register('causes')}
+                  htmlRef="causes"
+                  maxLength={50}
+                  id="causes"
+                  label="Nome da organização"
+                  placeholder="Escreva aqui o nome da organização"
+                />
+                <div className="flex items-end">
+                  <button
+                    type="button"
+                    onClick={handleSubmitCauses}
+                    className="flex h-12 w-12 items-center justify-center rounded-md bg-violet-500 text-zinc-50 transition-colors hover:bg-violet-400 group-hover:text-[#9D37F2]"
+                  >
+                    <ChevronRight />
+                  </button>
+                </div>
+
+                {errors.causes?.message && (
+                  <span className="text-sm text-red-600">
+                    {errors.causes.message}
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-2">
+                {causesArray.map((cause, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className=" rounded-md bg-sky-500 p-2 font-semibold text-zinc-50"
+                    >
+                      {cause}
+                    </span>
+                  )
+                })}
+              </div>
             </div>
             <button className="my-10 w-full rounded-md bg-violet-500 py-3 font-semibold text-zinc-50 transition-colors hover:bg-violet-400">
               Enviar
