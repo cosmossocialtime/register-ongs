@@ -23,12 +23,13 @@ import {
   schemaFormValidation,
 } from '@/types/typesRegisterForm'
 import { MaskForCnpj } from '@/mask/MaskForCnpj'
+import { CheckboxInput } from '@/components/Checkbox'
 
 const genders = ['Masculino', 'Feminino', 'Outro']
 
 export default function Home() {
   const [causesArray, setCausesArray] = useState(Array<string>)
-
+  const [noCnpj, setNoCnpj] = useState(false)
   const {
     register,
     handleSubmit,
@@ -53,6 +54,8 @@ export default function Home() {
 
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
+    console.log(noCnpj)
+    console.log(causesArray)
   }
 
   function handleSubmitCauses() {
@@ -63,7 +66,7 @@ export default function Home() {
     }
   }
 
-  console.log(causesArray)
+  console.log(errors)
 
   return (
     <main className="h-screen">
@@ -252,24 +255,39 @@ export default function Home() {
                   )
                 })}
               </div>
-              <Input
-                {...register('cnpj')}
-                label="CNPJ"
-                htmlRef="cnpj"
-                id="cnpj"
-                maxLength={18}
-                placeholder="Digite aqui o CNPJ da organização"
-                iconLeft={() => (
-                  <Users className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
-                )}
-              />
+              {!noCnpj ? (
+                <Input
+                  {...register('cnpj')}
+                  label="CNPJ"
+                  htmlRef="cnpj"
+                  id="cnpj"
+                  maxLength={18}
+                  placeholder="Digite aqui o CNPJ da organização"
+                  iconLeft={() => (
+                    <Users className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
+                  )}
+                />
+              ) : (
+                ''
+              )}
+
               {errors.cnpj && (
                 <span className="text-sm text-red-600">
                   {errors.cnpj.message}
                 </span>
               )}
+
+              <CheckboxInput
+                className="text-gray-600"
+                checked={noCnpj}
+                onChangeChecked={setNoCnpj}
+                content="Não possuo CNPJ"
+              />
             </div>
-            <button className="my-10 w-full rounded-md bg-violet-500 py-3 font-semibold text-zinc-50 transition-colors hover:bg-violet-400">
+            <button
+              type="submit"
+              className="my-10 w-full rounded-md bg-violet-500 py-3 font-semibold text-zinc-50 transition-colors hover:bg-violet-400"
+            >
               Enviar
             </button>
           </form>
