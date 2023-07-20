@@ -10,6 +10,7 @@ import {
   ChevronRight,
   X,
   Briefcase,
+  Users,
 } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -21,6 +22,7 @@ import {
   TypeFormRegisterOngs,
   schemaFormValidation,
 } from '@/types/typesRegisterForm'
+import { MaskForCnpj } from '@/mask/MaskForCnpj'
 
 const genders = ['Masculino', 'Feminino', 'Outro']
 
@@ -41,11 +43,13 @@ export default function Home() {
   })
 
   const numberTel = watch('tel')
+  const cnpj = watch('cnpj')
   const causes = watch('causes')
 
   useEffect(() => {
     setValue('tel', phoneMask(numberTel))
-  }, [numberTel, setValue])
+    setValue('cnpj', MaskForCnpj(cnpj))
+  }, [numberTel, cnpj, setValue])
 
   function handleSubmitForm(data: TypeFormRegisterOngs) {
     console.log(data)
@@ -248,6 +252,22 @@ export default function Home() {
                   )
                 })}
               </div>
+              <Input
+                {...register('cnpj')}
+                label="CNPJ"
+                htmlRef="cnpj"
+                id="cnpj"
+                maxLength={18}
+                placeholder="Digite aqui o CNPJ da organização"
+                iconLeft={() => (
+                  <Users className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
+                )}
+              />
+              {errors.cnpj && (
+                <span className="text-sm text-red-600">
+                  {errors.cnpj.message}
+                </span>
+              )}
             </div>
             <button className="my-10 w-full rounded-md bg-violet-500 py-3 font-semibold text-zinc-50 transition-colors hover:bg-violet-400">
               Enviar

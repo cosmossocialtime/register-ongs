@@ -17,6 +17,7 @@ export const schemaFormValidation = z.object({
   gender: z.string().nonempty('Por favor selecione seu gênero.'),
   role: z.string().nonempty('Por favor selecione seu cargo.'),
   causes: z.string(),
+  cnpj: z.string().nonempty('Informe o seu CNPJ.'),
 })
 
 export type TypeFormRegisterOngs = z.infer<typeof schemaFormValidation>
