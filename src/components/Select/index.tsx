@@ -26,7 +26,7 @@ export function InputSelect({
         data-placeholder
         className={twMerge(
           `${
-            rest.disabled ? 'border-0 border-b' : 'border'
+            rest.disabled ? 'border-0 border-b' : 'border-2'
           } group flex flex-1 items-center gap-2 rounded border-solid border-gray-400 px-4 py-3`,
           className,
         )}
@@ -48,19 +48,20 @@ export function InputSelect({
           className="w-full rounded bg-white p-2 shadow-xl"
         >
           <Select.Viewport style={{ maxHeight: maxHeightView }}>
-            {items.map((item, key) => (
-              <Select.Item
-                className="flex cursor-pointer items-center justify-between gap-4 rounded-md p-3 text-violet-500 outline-none hover:bg-violet-500 hover:text-white"
-                key={key}
-                value={item}
-                disabled={item === option}
-              >
-                <Select.ItemText>{item}</Select.ItemText>
-                <Select.ItemIndicator>
-                  <Check size={18} />
-                </Select.ItemIndicator>
-              </Select.Item>
-            ))}
+            {items &&
+              items.map((item, key) => (
+                <Select.Item
+                  className="flex cursor-pointer items-center justify-between gap-4 rounded-md p-3 text-violet-500 outline-none hover:bg-violet-500 hover:text-white"
+                  key={key}
+                  value={item}
+                  disabled={item === option}
+                >
+                  <Select.ItemText>{item}</Select.ItemText>
+                  <Select.ItemIndicator>
+                    <Check size={18} />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              ))}
           </Select.Viewport>
         </Select.Content>
       </Select.Portal>

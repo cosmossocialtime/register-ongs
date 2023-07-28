@@ -18,6 +18,13 @@ export const schemaFormValidation = z.object({
   role: z.string().nonempty('Por favor selecione seu cargo.'),
   causes: z.string(),
   cnpj: z.string(),
+  yearOfCreation: z.coerce.date().refine((date) => date < new Date(), {
+    message: 'Data invalida, por favor selecione uma data válida.',
+  }),
+  totalCollaborators: z.coerce
+    .number()
+    .nonnegative('Por valor digite um valor válido'),
+  annualIncome: z.string().nonempty('Digite uma quantia!'),
 })
 
 export type TypeFormRegisterOngs = z.infer<typeof schemaFormValidation>
