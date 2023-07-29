@@ -25,6 +25,12 @@ export const schemaFormValidation = z.object({
     .number()
     .nonnegative('Por valor digite um valor válido'),
   annualIncome: z.string().nonempty('Digite uma quantia!'),
+  beneficiaries: z.coerce.number().nonnegative('Digite uma quantidade válida.'),
+  historyOrganization: z.string(),
+  impactOrganization: z.string(),
+  mainNeeds: z.string(),
+  organizationSuport: z.string(),
+  howDidAboutTheProgram: z.string(),
 })
 
 export type TypeFormRegisterOngs = z.infer<typeof schemaFormValidation>

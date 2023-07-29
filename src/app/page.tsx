@@ -14,6 +14,8 @@ import {
   Check,
   HardHat,
   DollarSign,
+  Award,
+  Upload,
 } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,6 +33,7 @@ import useFetch from '@/hooks/useFetch'
 import axios from 'axios'
 import * as Select from '@radix-ui/react-select'
 import { MaskForIncome } from '@/mask/MaskForIncome'
+import { InputTextArea } from '@/components/TextArea'
 
 interface cityProps {
   id: number
@@ -46,6 +49,8 @@ const genders = ['Masculino', 'Feminino', 'Outro']
 export default function Home() {
   const [causesArray, setCausesArray] = useState(Array<string>)
   const [noCnpj, setNoCnpj] = useState(false)
+  const [notHaveSocialContract, setNotHaveSocialContract] = useState(false)
+  const [acceptTerms, setAcceptTerms] = useState(false)
   // const [outOfBrazil, setOutOfBrazil] = useState(false)
   const [stateSubmit, setStateSubmit] = useState('')
   const [citySubmit, setCitySubmit] = useState('')
@@ -443,6 +448,160 @@ export default function Home() {
                   {errors.annualIncome.message}
                 </span>
               )}
+              <Input
+                type="number"
+                {...register('beneficiaries')}
+                label="Quantidade de beneficiários"
+                htmlRef="beneficiaries"
+                id="beneficiaries"
+                placeholder="Quantidade de beneficiários"
+                iconLeft={() => (
+                  <Award className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
+                )}
+              />
+              {errors.beneficiaries && (
+                <span className="text-sm text-red-600">
+                  {errors.beneficiaries.message}
+                </span>
+              )}
+              <div className="flex flex-col gap-2">
+                {!notHaveSocialContract ? (
+                  <>
+                    <label className="text-gray-600" htmlFor="document">
+                      Estatuto ou Contrato Social
+                    </label>
+                    <label
+                      htmlFor="document"
+                      className=" flex flex-col items-center rounded-md border-2 border-dashed border-gray-50 p-10 text-center text-gray-50"
+                    >
+                      <Upload /> Insira o documento aqui
+                    </label>
+                  </>
+                ) : (
+                  ''
+                )}
+
+                <CheckboxInput
+                  className="mt-4 text-gray-600"
+                  checked={notHaveSocialContract}
+                  onChangeChecked={setNotHaveSocialContract}
+                  content="Não possui Estatuto ou Contrato Social"
+                />
+              </div>
+              <input id="document" className="hidden" type="file" />
+            </div>
+            <div className="mt-5 flex flex-col justify-center gap-5">
+              <h1 className="my-5 text-2xl font-semibold text-gray-800">
+                Etapa 3: Dados Descritivos
+              </h1>
+              <label htmlFor="historyOrganization">
+                Descreva brevemente a história da organização
+              </label>
+              <Controller
+                name="historyOrganization"
+                control={control}
+                render={({ field }) => (
+                  <InputTextArea
+                    required
+                    id="historyOrganization"
+                    text={field.value}
+                    onChange={field.onChange}
+                    className="h-32"
+                    placeholder="Escreva aqui a história da organização"
+                    minChar={100}
+                    maxChar={300}
+                  />
+                )}
+              />
+              <label htmlFor="impactOrganization">
+                Descreva a atuação e o impacto da organização
+              </label>
+              <Controller
+                name="impactOrganization"
+                control={control}
+                render={({ field }) => (
+                  <InputTextArea
+                    required
+                    id="impactOrganization"
+                    text={field.value}
+                    onChange={field.onChange}
+                    className="h-32"
+                    placeholder="Escreva aqui a atuação e o impacto da organização"
+                    minChar={100}
+                    maxChar={300}
+                  />
+                )}
+              />
+              <label htmlFor="mainNeeds">
+                Quais são as principais necessidades/desafios que a sua
+                organização enfrenta no momento?
+              </label>
+              <Controller
+                name="mainNeeds"
+                control={control}
+                render={({ field }) => (
+                  <InputTextArea
+                    required
+                    id="mainNeeds"
+                    text={field.value}
+                    onChange={field.onChange}
+                    className="h-32"
+                    placeholder="Escreva aqui os desafios que a organização enfrenta no momento"
+                    minChar={100}
+                    maxChar={300}
+                  />
+                )}
+              />
+              <label htmlFor="organizationSuport">
+                Como você acredita que o programa [Nome do programa] poderá
+                apoiar a sua organização?
+              </label>
+              <Controller
+                name="organizationSuport"
+                control={control}
+                render={({ field }) => (
+                  <InputTextArea
+                    required
+                    id="organizationSuport"
+                    text={field.value}
+                    onChange={field.onChange}
+                    className="h-32"
+                    placeholder="Escreva aqui como o programa pode apoiar a sua organização"
+                    minChar={100}
+                    maxChar={300}
+                  />
+                )}
+              />
+            </div>
+            <div className="mt-5 flex flex-col justify-center gap-5">
+              <h1 className="my-5 text-2xl font-semibold text-gray-800">
+                Etapa 4: Finalizar Inscrição
+              </h1>
+              <label htmlFor="howDidAboutTheProgram">
+                Como você ficou sabendo sobre o programa?
+              </label>
+              <Controller
+                name="howDidAboutTheProgram"
+                control={control}
+                render={({ field }) => (
+                  <InputTextArea
+                    required
+                    id="howDidAboutTheProgram"
+                    text={field.value}
+                    onChange={field.onChange}
+                    className="h-32"
+                    placeholder="Escreva aqui como você ficou sabendo sobre o programa"
+                    minChar={100}
+                    maxChar={300}
+                  />
+                )}
+              />
+              <CheckboxInput
+                className="mt-4 text-gray-600"
+                checked={acceptTerms}
+                onChangeChecked={setAcceptTerms}
+                content="Aceito o termo de tratamento de dados"
+              />
             </div>
             <button
               type="submit"
