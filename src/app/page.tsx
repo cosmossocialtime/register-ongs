@@ -118,7 +118,7 @@ export default function Home() {
   }
 
   return (
-    <main className="h-screen">
+    <main className="h-screen px-10 lg:px-0">
       <Header />
       <Layout>
         <div className="mx-auto w-full max-w-lg ">
@@ -250,7 +250,7 @@ export default function Home() {
                   {errors.nameCompany.message}
                 </span>
               )}
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-3 md:flex-row">
                 <Input
                   {...register('causes')}
                   htmlRef="causes"
@@ -259,14 +259,14 @@ export default function Home() {
                   label="Causa(s) em que atua (máx. 3)"
                   placeholder="Escreva aqui o nome das causas."
                   iconLeft={() => (
-                    <Briefcase className="text-gray-50 transition-colors  group-hover:text-[#9D37F2]" />
+                    <Briefcase className="text-gray-50 transition-colors group-hover:text-[#9D37F2]" />
                   )}
                 />
                 <div className="flex items-end">
                   <button
                     type="button"
                     onClick={handleSubmitCauses}
-                    className="flex h-12 w-12 items-center justify-center rounded-md bg-violet-500 text-zinc-50 transition-colors hover:bg-violet-400 group-hover:text-[#9D37F2]"
+                    className="flex h-12 w-full items-center justify-center rounded-md bg-violet-500 text-zinc-50 transition-colors hover:bg-violet-400 group-hover:text-[#9D37F2] md:w-12"
                   >
                     <ChevronRight />
                   </button>
